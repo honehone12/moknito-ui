@@ -8,15 +8,15 @@ import { tanstackRouter } from '@tanstack/router-plugin/vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    viteReact({
-      babel: {
-        plugins: ['babel-plugin-react-compiler'],
-      },
-    }),
     devtools(),
     tanstackRouter({
       target: 'react',
       autoCodeSplitting: true,
+    }),
+    viteReact({
+      babel: {
+        plugins: ['babel-plugin-react-compiler'],
+      },
     }),
     tailwindcss(),
   ],

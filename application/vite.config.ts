@@ -8,7 +8,11 @@ import { tanstackRouter } from '@tanstack/router-plugin/vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    devtools(),
+    devtools({
+      eventBusConfig: {
+        port: 42071,
+      },
+    }),
     tanstackRouter({
       target: 'react',
       autoCodeSplitting: true,

@@ -18,7 +18,7 @@ export default function Header() {
         </button>
         <h1 className="ml-4 text-xl font-semibold">
           <Link to="/user/new">
-            <p className="text-4xl font-bold">MOKNITO</p>
+            <p className="text-4xl font-bold">Moknito</p>
           </Link>
         </h1>
       </header>
@@ -41,14 +41,14 @@ export default function Header() {
 
         <nav className="flex-1 p-4 overflow-y-auto">
           <HeaderLink
-            to="/user/new"
-            onClick={() => setIsOpen(false)}
-            label="New User"
-          />
-          <HeaderLink
             to="/authentication/login"
             onClick={() => setIsOpen(false)}
             label="Log In"
+          />
+          <HeaderLink
+            to="/user/new"
+            onClick={() => setIsOpen(false)}
+            label="New User"
           />
         </nav>
       </aside>

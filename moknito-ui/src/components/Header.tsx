@@ -17,7 +17,7 @@ export default function Header() {
           <Menu size={24} />
         </button>
         <h1 className="ml-4 text-xl font-semibold">
-          <Link to="/user/new">
+          <Link to="/authentication/login">
             <p className="text-4xl font-bold">Moknito</p>
           </Link>
         </h1>
@@ -46,7 +46,7 @@ export default function Header() {
             label="Log In"
           />
           <HeaderLink
-            to="/user/new"
+            to="/user/register"
             onClick={() => setIsOpen(false)}
             label="New User"
           />

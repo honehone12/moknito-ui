@@ -10,7 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as UserNewRouteImport } from './routes/user/new'
+import { Route as UserRegisterRouteImport } from './routes/user/register'
+import { Route as UserConfirmRouteImport } from './routes/user/confirm'
 import { Route as AuthenticationLoginRouteImport } from './routes/authentication/login'
 
 const IndexRoute = IndexRouteImport.update({
@@ -18,9 +19,14 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UserNewRoute = UserNewRouteImport.update({
-  id: '/user/new',
-  path: '/user/new',
+const UserRegisterRoute = UserRegisterRouteImport.update({
+  id: '/user/register',
+  path: '/user/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UserConfirmRoute = UserConfirmRouteImport.update({
+  id: '/user/confirm',
+  path: '/user/confirm',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticationLoginRoute = AuthenticationLoginRouteImport.update({
@@ -32,31 +38,40 @@ const AuthenticationLoginRoute = AuthenticationLoginRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/authentication/login': typeof AuthenticationLoginRoute
-  '/user/new': typeof UserNewRoute
+  '/user/confirm': typeof UserConfirmRoute
+  '/user/register': typeof UserRegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/authentication/login': typeof AuthenticationLoginRoute
-  '/user/new': typeof UserNewRoute
+  '/user/confirm': typeof UserConfirmRoute
+  '/user/register': typeof UserRegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/authentication/login': typeof AuthenticationLoginRoute
-  '/user/new': typeof UserNewRoute
+  '/user/confirm': typeof UserConfirmRoute
+  '/user/register': typeof UserRegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/authentication/login' | '/user/new'
+  fullPaths: '/' | '/authentication/login' | '/user/confirm' | '/user/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/authentication/login' | '/user/new'
-  id: '__root__' | '/' | '/authentication/login' | '/user/new'
+  to: '/' | '/authentication/login' | '/user/confirm' | '/user/register'
+  id:
+    | '__root__'
+    | '/'
+    | '/authentication/login'
+    | '/user/confirm'
+    | '/user/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticationLoginRoute: typeof AuthenticationLoginRoute
-  UserNewRoute: typeof UserNewRoute
+  UserConfirmRoute: typeof UserConfirmRoute
+  UserRegisterRoute: typeof UserRegisterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,11 +83,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/user/new': {
-      id: '/user/new'
-      path: '/user/new'
-      fullPath: '/user/new'
-      preLoaderRoute: typeof UserNewRouteImport
+    '/user/register': {
+      id: '/user/register'
+      path: '/user/register'
+      fullPath: '/user/register'
+      preLoaderRoute: typeof UserRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/user/confirm': {
+      id: '/user/confirm'
+      path: '/user/confirm'
+      fullPath: '/user/confirm'
+      preLoaderRoute: typeof UserConfirmRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/authentication/login': {
@@ -88,7 +110,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticationLoginRoute: AuthenticationLoginRoute,
-  UserNewRoute: UserNewRoute,
+  UserConfirmRoute: UserConfirmRoute,
+  UserRegisterRoute: UserRegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

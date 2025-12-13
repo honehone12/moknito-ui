@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
 import { Suspense, use } from 'react'
 
-export const Route = createFileRoute('/user/new')({
+export const Route = createFileRoute('/user/register')({
   component: RouteComponent,
 })
 

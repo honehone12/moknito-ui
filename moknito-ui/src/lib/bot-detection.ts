@@ -13,8 +13,6 @@ async function init() {
   if (result.bot) {
     throw new Error(`detected bot: ${result.botKind}`)
   }
-
-  return result
 }
 
 export const botDetection = init()

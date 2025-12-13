@@ -9,7 +9,7 @@ function RouteComponent() {
   const navigate = useNavigate({ from: '/' })
 
   useEffect(() => {
-    navigate({ to: '/authentication/login' })
+    navigate({ to: '/user/authentication' })
   }, [])
 
   return null

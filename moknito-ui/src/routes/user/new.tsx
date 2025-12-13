@@ -1,8 +1,8 @@
 import Loading from '@/components/Loading'
-import { fingerprint } from '@/lib/fingerprint'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { botDetection } from '@/lib/bot-detection'
+import { createFileRoute } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
-import { Suspense, use, useTransition } from 'react'
+import { Suspense, use } from 'react'
 
 export const Route = createFileRoute('/user/new')({
   component: RouteComponent,
@@ -10,24 +10,7 @@ export const Route = createFileRoute('/user/new')({
 
 function RouteComponent() {
   function Form() {
-    const [pending, startTransition] = useTransition()
-    const navigate = useNavigate({ from: '/user/new' })
-
-    const fp = use(fingerprint)
-
-    function action(form: FormData) {
-      startTransition(async () => {
-        const res = await fetch('/api/user/new', {
-          method: 'POST',
-          body: form,
-        })
-        if (res.status === 303) {
-          navigate({ to: '/authentication/login' })
-        } else {
-          throw new Error(`${res.status}: ${res.statusText}`)
-        }
-      })
-    }
+    use(botDetection)
 
     return (
       <div className="card w-96 bg-base-200  shadow-xl">
@@ -35,7 +18,7 @@ function RouteComponent() {
           <h2 className="card-title text-2xl font-bold mb-4">
             Create New User
           </h2>
-          <form action={action}>
+          <form method="POST" action="/api/user/new">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Name</span>
@@ -48,7 +31,6 @@ function RouteComponent() {
                 required
                 min={1}
                 max={256}
-                disabled={pending}
               />
             </div>
             <div className="form-control mt-4">
@@ -62,7 +44,6 @@ function RouteComponent() {
                 className="input input-bordered w-full"
                 required
                 max={128}
-                disabled={pending}
               />
             </div>
             <div className="form-control mt-4">
@@ -77,26 +58,17 @@ function RouteComponent() {
                 required
                 min={8}
                 max={128}
-                disabled={pending}
               />
             </div>
             <div className="form-control mt-6">
-              <button
-                type="submit"
-                className="btn btn-primary w-full"
-                disabled={pending}
-              >
+              <button type="submit" className="btn btn-primary w-full">
                 Create User
               </button>
             </div>
             <div className="text-center mt-4">
-              {pending ? (
-                <Loading />
-              ) : (
-                <Link to="/authentication/login" className="link link-primary">
-                  <span className="text-lg">Already have a account?</span>
-                </Link>
-              )}
+              <Link to="/authentication/login" className="link link-primary">
+                <span className="text-lg">Already have a account?</span>
+              </Link>
             </div>
           </form>
         </div>

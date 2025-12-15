@@ -1,14 +1,18 @@
+import Loading from '@/components/Loading'
 import LoginForm from '@/components/LoginForm'
 import { createFileRoute } from '@tanstack/react-router'
+import { Suspense } from 'react'
 
-export const Route = createFileRoute('/user/confirm')({
+export const Route = createFileRoute('/user/join')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
   return (
     <main className="flex min-h-screen items-center justify-center">
-      <LoginForm method="POST" action="/api/user/confirm" />
+      <Suspense fallback={<Loading />}>
+        <LoginForm method="POST" action="/api/user/join" />
+      </Suspense>
     </main>
   )
 }

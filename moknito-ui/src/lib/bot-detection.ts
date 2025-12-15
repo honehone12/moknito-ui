@@ -1,7 +1,6 @@
 import { load as loadBotd, type BotDetectionResult } from '@fingerprintjs/botd'
 
 let result: BotDetectionResult | null = null
-
 async function init() {
   if (!result) {
     const botd = await loadBotd()
@@ -15,4 +14,5 @@ async function init() {
   }
 }
 
-export const botDetection = init()
+const botDetection = init()
+export default botDetection

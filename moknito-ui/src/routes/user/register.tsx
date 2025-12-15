@@ -1,5 +1,5 @@
 import Loading from '@/components/Loading'
-import { botDetection } from '@/lib/bot-detection'
+import botDetection from '@/lib/bot-detection'
 import { createFileRoute } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
 import { Suspense, use } from 'react'
@@ -18,7 +18,7 @@ function RouteComponent() {
           <h2 className="card-title text-2xl font-bold mb-4">
             Create New User
           </h2>
-          <form method="POST" action="/api/user/new">
+          <form method="POST" action="/api/user/register">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Name</span>
@@ -66,7 +66,7 @@ function RouteComponent() {
               </button>
             </div>
             <div className="text-center mt-4">
-              <Link to="/authentication/login" className="link link-primary">
+              <Link to="/user/authenticate" className="link link-primary">
                 <span className="text-lg">Already have a account?</span>
               </Link>
             </div>
@@ -77,10 +77,10 @@ function RouteComponent() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <main className="flex min-h-screen items-center justify-center">
       <Suspense fallback={<Loading />}>
         <Form />
       </Suspense>
-    </div>
+    </main>
   )
 }

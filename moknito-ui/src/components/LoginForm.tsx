@@ -1,4 +1,6 @@
+import botDetection from '@/lib/bot-detection'
 import { Link } from '@tanstack/react-router'
+import { use } from 'react'
 
 interface Props {
   method: string
@@ -6,6 +8,8 @@ interface Props {
 }
 
 export default function LoginForm({ method, action }: Props) {
+  use(botDetection)
+
   return (
     <div className="card w-96 bg-base-200 shadow-xl">
       <div className="card-body">
@@ -16,6 +20,7 @@ export default function LoginForm({ method, action }: Props) {
               <span className="label-text">Email</span>
             </label>
             <input
+              name="email"
               type="email"
               placeholder="email"
               className="input input-bordered w-full"
@@ -28,6 +33,7 @@ export default function LoginForm({ method, action }: Props) {
               <span className="label-text">Password</span>
             </label>
             <input
+              name="password"
               type="password"
               placeholder="password"
               className="input input-bordered w-full"

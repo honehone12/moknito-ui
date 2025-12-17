@@ -1,16 +1,16 @@
 import { load as loadBotd, type BotDetectionResult } from '@fingerprintjs/botd'
 
-let result: BotDetectionResult | null = null
+let __result: BotDetectionResult | null = null
 async function init() {
-  if (!result) {
+  if (!__result) {
     const botd = await loadBotd()
 
     await botd.collect()
-    result = botd.detect()
+    __result = botd.detect()
   }
 
-  if (result.bot) {
-    throw new Error(`detected bot: ${result.botKind}`)
+  if (__result.bot) {
+    throw new Error(`detected bot: ${__result.botKind}`)
   }
 }
 

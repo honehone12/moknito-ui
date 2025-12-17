@@ -18,7 +18,7 @@ export default function Header() {
         </button>
         <h1 className="ml-4 text-xl font-semibold">
           <Link to="/">
-            <p className="text-4xl font-bold">APPLICATION</p>
+            <p className="text-4xl font-bold">Application3001</p>
           </Link>
         </h1>
       </header>

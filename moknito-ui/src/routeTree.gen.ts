@@ -9,113 +9,138 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ApplicationIndexRouteImport } from './routes/application/index'
-import { Route as UserRegisterRouteImport } from './routes/user/register'
-import { Route as UserJoinRouteImport } from './routes/user/join'
-import { Route as UserAuthenticateRouteImport } from './routes/user/authenticate'
+import { Route as ErrorIndexRouteImport } from './routes/error/index'
+import { Route as ApplicationIdIndexRouteImport } from './routes/application/$id/index'
+import { Route as UserRegisterIdIndexRouteImport } from './routes/user/register/$id/index'
+import { Route as UserJoinIdIndexRouteImport } from './routes/user/join/$id/index'
+import { Route as UserAuthenticateIdIndexRouteImport } from './routes/user/authenticate/$id/index'
 
-const ApplicationIndexRoute = ApplicationIndexRouteImport.update({
-  id: '/application/',
-  path: '/application/',
+const ErrorIndexRoute = ErrorIndexRouteImport.update({
+  id: '/error/',
+  path: '/error/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UserRegisterRoute = UserRegisterRouteImport.update({
-  id: '/user/register',
-  path: '/user/register',
+const ApplicationIdIndexRoute = ApplicationIdIndexRouteImport.update({
+  id: '/application/$id/',
+  path: '/application/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UserJoinRoute = UserJoinRouteImport.update({
-  id: '/user/join',
-  path: '/user/join',
+const UserRegisterIdIndexRoute = UserRegisterIdIndexRouteImport.update({
+  id: '/user/register/$id/',
+  path: '/user/register/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UserAuthenticateRoute = UserAuthenticateRouteImport.update({
-  id: '/user/authenticate',
-  path: '/user/authenticate',
+const UserJoinIdIndexRoute = UserJoinIdIndexRouteImport.update({
+  id: '/user/join/$id/',
+  path: '/user/join/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UserAuthenticateIdIndexRoute = UserAuthenticateIdIndexRouteImport.update({
+  id: '/user/authenticate/$id/',
+  path: '/user/authenticate/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/user/authenticate': typeof UserAuthenticateRoute
-  '/user/join': typeof UserJoinRoute
-  '/user/register': typeof UserRegisterRoute
-  '/application': typeof ApplicationIndexRoute
+  '/error': typeof ErrorIndexRoute
+  '/application/$id': typeof ApplicationIdIndexRoute
+  '/user/authenticate/$id': typeof UserAuthenticateIdIndexRoute
+  '/user/join/$id': typeof UserJoinIdIndexRoute
+  '/user/register/$id': typeof UserRegisterIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/user/authenticate': typeof UserAuthenticateRoute
-  '/user/join': typeof UserJoinRoute
-  '/user/register': typeof UserRegisterRoute
-  '/application': typeof ApplicationIndexRoute
+  '/error': typeof ErrorIndexRoute
+  '/application/$id': typeof ApplicationIdIndexRoute
+  '/user/authenticate/$id': typeof UserAuthenticateIdIndexRoute
+  '/user/join/$id': typeof UserJoinIdIndexRoute
+  '/user/register/$id': typeof UserRegisterIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/user/authenticate': typeof UserAuthenticateRoute
-  '/user/join': typeof UserJoinRoute
-  '/user/register': typeof UserRegisterRoute
-  '/application/': typeof ApplicationIndexRoute
+  '/error/': typeof ErrorIndexRoute
+  '/application/$id/': typeof ApplicationIdIndexRoute
+  '/user/authenticate/$id/': typeof UserAuthenticateIdIndexRoute
+  '/user/join/$id/': typeof UserJoinIdIndexRoute
+  '/user/register/$id/': typeof UserRegisterIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/user/authenticate'
-    | '/user/join'
-    | '/user/register'
-    | '/application'
+    | '/error'
+    | '/application/$id'
+    | '/user/authenticate/$id'
+    | '/user/join/$id'
+    | '/user/register/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/user/authenticate' | '/user/join' | '/user/register' | '/application'
+  to:
+    | '/error'
+    | '/application/$id'
+    | '/user/authenticate/$id'
+    | '/user/join/$id'
+    | '/user/register/$id'
   id:
     | '__root__'
-    | '/user/authenticate'
-    | '/user/join'
-    | '/user/register'
-    | '/application/'
+    | '/error/'
+    | '/application/$id/'
+    | '/user/authenticate/$id/'
+    | '/user/join/$id/'
+    | '/user/register/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  UserAuthenticateRoute: typeof UserAuthenticateRoute
-  UserJoinRoute: typeof UserJoinRoute
-  UserRegisterRoute: typeof UserRegisterRoute
-  ApplicationIndexRoute: typeof ApplicationIndexRoute
+  ErrorIndexRoute: typeof ErrorIndexRoute
+  ApplicationIdIndexRoute: typeof ApplicationIdIndexRoute
+  UserAuthenticateIdIndexRoute: typeof UserAuthenticateIdIndexRoute
+  UserJoinIdIndexRoute: typeof UserJoinIdIndexRoute
+  UserRegisterIdIndexRoute: typeof UserRegisterIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/application/': {
-      id: '/application/'
-      path: '/application'
-      fullPath: '/application'
-      preLoaderRoute: typeof ApplicationIndexRouteImport
+    '/error/': {
+      id: '/error/'
+      path: '/error'
+      fullPath: '/error'
+      preLoaderRoute: typeof ErrorIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/user/register': {
-      id: '/user/register'
-      path: '/user/register'
-      fullPath: '/user/register'
-      preLoaderRoute: typeof UserRegisterRouteImport
+    '/application/$id/': {
+      id: '/application/$id/'
+      path: '/application/$id'
+      fullPath: '/application/$id'
+      preLoaderRoute: typeof ApplicationIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/user/join': {
-      id: '/user/join'
-      path: '/user/join'
-      fullPath: '/user/join'
-      preLoaderRoute: typeof UserJoinRouteImport
+    '/user/register/$id/': {
+      id: '/user/register/$id/'
+      path: '/user/register/$id'
+      fullPath: '/user/register/$id'
+      preLoaderRoute: typeof UserRegisterIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/user/authenticate': {
-      id: '/user/authenticate'
-      path: '/user/authenticate'
-      fullPath: '/user/authenticate'
-      preLoaderRoute: typeof UserAuthenticateRouteImport
+    '/user/join/$id/': {
+      id: '/user/join/$id/'
+      path: '/user/join/$id'
+      fullPath: '/user/join/$id'
+      preLoaderRoute: typeof UserJoinIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/user/authenticate/$id/': {
+      id: '/user/authenticate/$id/'
+      path: '/user/authenticate/$id'
+      fullPath: '/user/authenticate/$id'
+      preLoaderRoute: typeof UserAuthenticateIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  UserAuthenticateRoute: UserAuthenticateRoute,
-  UserJoinRoute: UserJoinRoute,
-  UserRegisterRoute: UserRegisterRoute,
-  ApplicationIndexRoute: ApplicationIndexRoute,
+  ErrorIndexRoute: ErrorIndexRoute,
+  ApplicationIdIndexRoute: ApplicationIdIndexRoute,
+  UserAuthenticateIdIndexRoute: UserAuthenticateIdIndexRoute,
+  UserJoinIdIndexRoute: UserJoinIdIndexRoute,
+  UserRegisterIdIndexRoute: UserRegisterIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -17,21 +17,17 @@ export default function LoginForm({ id, apiRoute }: Props) {
   const [pending, startTransition] = useTransition()
   const navigate = useNavigate()
 
-  async function postForm(form: FormData) {
+  function postForm(form: FormData) {
     startTransition(async () => {
-      try {
-        const res = await fetch(apiRoute, {
-          method: 'POST',
-          body: form,
-        })
-        if (res.status !== STATUS.OK) {
-          throw new Error(`response ${res.status}:${res.statusText}`)
-        }
-
-        navigate({ to: '/application/$id', params: { id } })
-      } catch {
-        navigate({ to: '/error' })
+      const res = await fetch(apiRoute, {
+        method: 'POST',
+        body: form,
+      })
+      if (res.status !== STATUS.OK) {
+        throw new Error(`response ${res.status}:${res.statusText}`)
       }
+
+      navigate({ to: '/app/$id', params: { id } })
     })
   }
 
@@ -39,7 +35,7 @@ export default function LoginForm({ id, apiRoute }: Props) {
     return (
       <div className="card w-96 bg-base-200 shadow-xl">
         <div className="card-body">
-          <h2 className="card-title text-2xl font-bold mb-4">Login</h2>
+          <h1 className="card-title text-2xl font-bold mb-4">Login</h1>
           <form action={postForm}>
             <div className="form-control">
               <label className="label">

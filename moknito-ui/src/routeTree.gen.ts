@@ -9,20 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ErrorIndexRouteImport } from './routes/error/index'
-import { Route as ApplicationIdIndexRouteImport } from './routes/application/$id/index'
+import { Route as AppIdIndexRouteImport } from './routes/app/$id/index'
 import { Route as UserRegisterIdIndexRouteImport } from './routes/user/register/$id/index'
 import { Route as UserJoinIdIndexRouteImport } from './routes/user/join/$id/index'
 import { Route as UserAuthenticateIdIndexRouteImport } from './routes/user/authenticate/$id/index'
 
-const ErrorIndexRoute = ErrorIndexRouteImport.update({
-  id: '/error/',
-  path: '/error/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApplicationIdIndexRoute = ApplicationIdIndexRouteImport.update({
-  id: '/application/$id/',
-  path: '/application/$id/',
+const AppIdIndexRoute = AppIdIndexRouteImport.update({
+  id: '/app/$id/',
+  path: '/app/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UserRegisterIdIndexRoute = UserRegisterIdIndexRouteImport.update({
@@ -42,23 +36,20 @@ const UserAuthenticateIdIndexRoute = UserAuthenticateIdIndexRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/error': typeof ErrorIndexRoute
-  '/application/$id': typeof ApplicationIdIndexRoute
+  '/app/$id': typeof AppIdIndexRoute
   '/user/authenticate/$id': typeof UserAuthenticateIdIndexRoute
   '/user/join/$id': typeof UserJoinIdIndexRoute
   '/user/register/$id': typeof UserRegisterIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/error': typeof ErrorIndexRoute
-  '/application/$id': typeof ApplicationIdIndexRoute
+  '/app/$id': typeof AppIdIndexRoute
   '/user/authenticate/$id': typeof UserAuthenticateIdIndexRoute
   '/user/join/$id': typeof UserJoinIdIndexRoute
   '/user/register/$id': typeof UserRegisterIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/error/': typeof ErrorIndexRoute
-  '/application/$id/': typeof ApplicationIdIndexRoute
+  '/app/$id/': typeof AppIdIndexRoute
   '/user/authenticate/$id/': typeof UserAuthenticateIdIndexRoute
   '/user/join/$id/': typeof UserJoinIdIndexRoute
   '/user/register/$id/': typeof UserRegisterIdIndexRoute
@@ -66,30 +57,26 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/error'
-    | '/application/$id'
+    | '/app/$id'
     | '/user/authenticate/$id'
     | '/user/join/$id'
     | '/user/register/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/error'
-    | '/application/$id'
+    | '/app/$id'
     | '/user/authenticate/$id'
     | '/user/join/$id'
     | '/user/register/$id'
   id:
     | '__root__'
-    | '/error/'
-    | '/application/$id/'
+    | '/app/$id/'
     | '/user/authenticate/$id/'
     | '/user/join/$id/'
     | '/user/register/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  ErrorIndexRoute: typeof ErrorIndexRoute
-  ApplicationIdIndexRoute: typeof ApplicationIdIndexRoute
+  AppIdIndexRoute: typeof AppIdIndexRoute
   UserAuthenticateIdIndexRoute: typeof UserAuthenticateIdIndexRoute
   UserJoinIdIndexRoute: typeof UserJoinIdIndexRoute
   UserRegisterIdIndexRoute: typeof UserRegisterIdIndexRoute
@@ -97,18 +84,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/error/': {
-      id: '/error/'
-      path: '/error'
-      fullPath: '/error'
-      preLoaderRoute: typeof ErrorIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/application/$id/': {
-      id: '/application/$id/'
-      path: '/application/$id'
-      fullPath: '/application/$id'
-      preLoaderRoute: typeof ApplicationIdIndexRouteImport
+    '/app/$id/': {
+      id: '/app/$id/'
+      path: '/app/$id'
+      fullPath: '/app/$id'
+      preLoaderRoute: typeof AppIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/user/register/$id/': {
@@ -136,8 +116,7 @@ declare module '@tanstack/react-router' {
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  ErrorIndexRoute: ErrorIndexRoute,
-  ApplicationIdIndexRoute: ApplicationIdIndexRoute,
+  AppIdIndexRoute: AppIdIndexRoute,
   UserAuthenticateIdIndexRoute: UserAuthenticateIdIndexRoute,
   UserJoinIdIndexRoute: UserJoinIdIndexRoute,
   UserRegisterIdIndexRoute: UserRegisterIdIndexRoute,

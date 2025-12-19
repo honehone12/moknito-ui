@@ -9,9 +9,10 @@ import Loading from './Loading'
 interface Props {
   id: string
   apiRoute: string
+  challenge: string
 }
 
-export default function LoginForm({ id, apiRoute }: Props) {
+export default function LoginForm({ id, apiRoute, challenge }: Props) {
   use(botDetection)
 
   const [pending, startTransition] = useTransition()
@@ -19,6 +20,8 @@ export default function LoginForm({ id, apiRoute }: Props) {
 
   function postForm(form: FormData) {
     startTransition(async () => {
+      form.set('challenge', challenge)
+
       const res = await fetch(apiRoute, {
         method: 'POST',
         body: form,
@@ -27,7 +30,7 @@ export default function LoginForm({ id, apiRoute }: Props) {
         throw new Error(`response ${res.status}:${res.statusText}`)
       }
 
-      navigate({ to: '/app/$id', params: { id } })
+      navigate({ to: '/app/authorize/$id', params: { id } })
     })
   }
 
@@ -79,6 +82,7 @@ export default function LoginForm({ id, apiRoute }: Props) {
               <Link
                 to="/user/register/$id"
                 params={{ id }}
+                search={{ challenge }}
                 className="link link-primary"
                 disabled={pending}
               >

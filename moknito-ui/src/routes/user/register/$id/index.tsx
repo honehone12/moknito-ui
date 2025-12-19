@@ -1,5 +1,6 @@
 import Loading from '@/components/Loading'
 import botDetection from '@/lib/bot-detection'
+import { CHALLENGE_SCHEMA } from '@/lib/challenge'
 import { STATUS } from '@/lib/http'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
@@ -7,10 +8,12 @@ import { Suspense, use, useTransition } from 'react'
 
 export const Route = createFileRoute('/user/register/$id/')({
   component: RouteComponent,
+  validateSearch: CHALLENGE_SCHEMA,
 })
 
 function RouteComponent() {
   const { id } = Route.useParams()
+  const { challenge } = Route.useSearch()
 
   function RegistrationForm() {
     use(botDetection)
@@ -28,7 +31,11 @@ function RouteComponent() {
           throw new Error(`response ${res.status}:${res.statusText}`)
         }
 
-        navigate({ to: '/user/authenticate/$id', params: { id } })
+        navigate({
+          to: '/user/join/$id',
+          params: { id },
+          search: { challenge },
+        })
       })
     }
 
@@ -97,6 +104,7 @@ function RouteComponent() {
                 <Link
                   to="/user/authenticate/$id"
                   params={{ id }}
+                  search={{ challenge }}
                   className="link link-primary"
                   disabled={pending}
                 >

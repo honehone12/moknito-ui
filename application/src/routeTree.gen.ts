@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RedirectIndexRouteImport } from './routes/redirect/index'
 import { Route as ContentsIndexRouteImport } from './routes/contents/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RedirectIndexRoute = RedirectIndexRouteImport.update({
+  id: '/redirect/',
+  path: '/redirect/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContentsIndexRoute = ContentsIndexRouteImport.update({
@@ -26,27 +32,31 @@ const ContentsIndexRoute = ContentsIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contents': typeof ContentsIndexRoute
+  '/redirect': typeof RedirectIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contents': typeof ContentsIndexRoute
+  '/redirect': typeof RedirectIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contents/': typeof ContentsIndexRoute
+  '/redirect/': typeof RedirectIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contents'
+  fullPaths: '/' | '/contents' | '/redirect'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contents'
-  id: '__root__' | '/' | '/contents/'
+  to: '/' | '/contents' | '/redirect'
+  id: '__root__' | '/' | '/contents/' | '/redirect/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContentsIndexRoute: typeof ContentsIndexRoute
+  RedirectIndexRoute: typeof RedirectIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/redirect/': {
+      id: '/redirect/'
+      path: '/redirect'
+      fullPath: '/redirect'
+      preLoaderRoute: typeof RedirectIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contents/': {
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContentsIndexRoute: ContentsIndexRoute,
+  RedirectIndexRoute: RedirectIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

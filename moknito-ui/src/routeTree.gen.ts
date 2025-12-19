@@ -9,16 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AppIdIndexRouteImport } from './routes/app/$id/index'
 import { Route as UserRegisterIdIndexRouteImport } from './routes/user/register/$id/index'
 import { Route as UserJoinIdIndexRouteImport } from './routes/user/join/$id/index'
 import { Route as UserAuthenticateIdIndexRouteImport } from './routes/user/authenticate/$id/index'
+import { Route as AppAuthorizeIdIndexRouteImport } from './routes/app/authorize/$id/index'
 
-const AppIdIndexRoute = AppIdIndexRouteImport.update({
-  id: '/app/$id/',
-  path: '/app/$id/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const UserRegisterIdIndexRoute = UserRegisterIdIndexRouteImport.update({
   id: '/user/register/$id/',
   path: '/user/register/$id/',
@@ -34,22 +29,27 @@ const UserAuthenticateIdIndexRoute = UserAuthenticateIdIndexRouteImport.update({
   path: '/user/authenticate/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppAuthorizeIdIndexRoute = AppAuthorizeIdIndexRouteImport.update({
+  id: '/app/authorize/$id/',
+  path: '/app/authorize/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/app/$id': typeof AppIdIndexRoute
+  '/app/authorize/$id': typeof AppAuthorizeIdIndexRoute
   '/user/authenticate/$id': typeof UserAuthenticateIdIndexRoute
   '/user/join/$id': typeof UserJoinIdIndexRoute
   '/user/register/$id': typeof UserRegisterIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/app/$id': typeof AppIdIndexRoute
+  '/app/authorize/$id': typeof AppAuthorizeIdIndexRoute
   '/user/authenticate/$id': typeof UserAuthenticateIdIndexRoute
   '/user/join/$id': typeof UserJoinIdIndexRoute
   '/user/register/$id': typeof UserRegisterIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/app/$id/': typeof AppIdIndexRoute
+  '/app/authorize/$id/': typeof AppAuthorizeIdIndexRoute
   '/user/authenticate/$id/': typeof UserAuthenticateIdIndexRoute
   '/user/join/$id/': typeof UserJoinIdIndexRoute
   '/user/register/$id/': typeof UserRegisterIdIndexRoute
@@ -57,26 +57,26 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/app/$id'
+    | '/app/authorize/$id'
     | '/user/authenticate/$id'
     | '/user/join/$id'
     | '/user/register/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/app/$id'
+    | '/app/authorize/$id'
     | '/user/authenticate/$id'
     | '/user/join/$id'
     | '/user/register/$id'
   id:
     | '__root__'
-    | '/app/$id/'
+    | '/app/authorize/$id/'
     | '/user/authenticate/$id/'
     | '/user/join/$id/'
     | '/user/register/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AppIdIndexRoute: typeof AppIdIndexRoute
+  AppAuthorizeIdIndexRoute: typeof AppAuthorizeIdIndexRoute
   UserAuthenticateIdIndexRoute: typeof UserAuthenticateIdIndexRoute
   UserJoinIdIndexRoute: typeof UserJoinIdIndexRoute
   UserRegisterIdIndexRoute: typeof UserRegisterIdIndexRoute
@@ -84,13 +84,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/app/$id/': {
-      id: '/app/$id/'
-      path: '/app/$id'
-      fullPath: '/app/$id'
-      preLoaderRoute: typeof AppIdIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/user/register/$id/': {
       id: '/user/register/$id/'
       path: '/user/register/$id'
@@ -112,11 +105,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UserAuthenticateIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/authorize/$id/': {
+      id: '/app/authorize/$id/'
+      path: '/app/authorize/$id'
+      fullPath: '/app/authorize/$id'
+      preLoaderRoute: typeof AppAuthorizeIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  AppIdIndexRoute: AppIdIndexRoute,
+  AppAuthorizeIdIndexRoute: AppAuthorizeIdIndexRoute,
   UserAuthenticateIdIndexRoute: UserAuthenticateIdIndexRoute,
   UserJoinIdIndexRoute: UserJoinIdIndexRoute,
   UserRegisterIdIndexRoute: UserRegisterIdIndexRoute,

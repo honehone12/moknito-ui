@@ -2,9 +2,9 @@ import Loading from '@/components/Loading'
 import botDetection from '@/lib/bot-detection'
 import { STATUS } from '@/lib/http'
 import { createFileRoute } from '@tanstack/react-router'
-import { Suspense, use, useState, useTransition } from 'react'
+import { Suspense, use, useTransition } from 'react'
 
-export const Route = createFileRoute('/app/$id/')({
+export const Route = createFileRoute('/app/authorize/$id/')({
   component: RouteComponent,
 })
 
@@ -37,32 +37,39 @@ function RouteComponent() {
 
   function Authorize({ promise }: Props) {
     const [pending, startTransition] = useTransition()
-    const [done, setDone] = useState(false)
     const appInfo = use(promise)
 
     function onClick() {
       startTransition(async () => {
         const form = new FormData()
-        form.append('id', id)
-        const res = await fetch('/api/app/authorize', {
-          method: 'POST',
-          body: form,
-        })
+        form.set('id', id)
+        {
+          const res = await fetch('/api/app/allow', {
+            method: 'POST',
+            body: form,
+          })
 
-        if (res.status !== STATUS.OK) {
-          throw new Error(`response ${res.status}:${res.statusText}`)
+          if (res.status !== STATUS.OK) {
+            throw new Error(`response ${res.status}:${res.statusText}`)
+          }
         }
+        {
+          const res = await fetch('/api/app/authorize', {
+            method: 'POST',
+            body: form,
+          })
 
-        setDone(true)
+          if (!res.redirected) {
+            throw new Error('response was not redirected')
+          }
+
+          location.href = res.url
+        }
       })
     }
 
     function Form() {
-      return done ? (
-        <div>
-          <p className="text-2xl text-center">Done</p>
-        </div>
-      ) : (
+      return (
         <div>
           <div className="text-center">
             <h1 className="text-2xl text-primary">Authorize App</h1>
@@ -81,7 +88,7 @@ function RouteComponent() {
               className="btn btn-primary w-30"
               type="button"
               onClick={onClick}
-              disabled={pending || done}
+              disabled={pending}
             >
               Ok
             </button>
@@ -93,7 +100,7 @@ function RouteComponent() {
     return <>{pending ? <Loading /> : <Form />}</>
   }
 
-  if (__appInfoPromise === null) {
+  if (!__appInfoPromise) {
     __appInfoPromise = init()
   }
 

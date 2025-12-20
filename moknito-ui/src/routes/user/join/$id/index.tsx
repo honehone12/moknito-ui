@@ -12,7 +12,7 @@ export const Route = createFileRoute('/user/join/$id/')({
 
 function RouteComponent() {
   const { id } = Route.useParams()
-  const { challenge } = Route.useSearch()
+  const { challenge, redirect } = Route.useSearch()
 
   return (
     <main className="flex min-h-screen items-center justify-center">
@@ -21,6 +21,7 @@ function RouteComponent() {
           id={id}
           apiRoute={`/api/user/${id}/join`}
           challenge={challenge}
+          redirect={redirect}
         />
       </Suspense>
     </main>

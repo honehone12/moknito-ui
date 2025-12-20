@@ -5,14 +5,16 @@ import { use } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { useTransition } from 'react'
 import Loading from './Loading'
+import { CHALLENGE_METHOD } from '@/lib/challenge'
 
 interface Props {
   id: string
   apiRoute: string
   challenge: string
+  redirect: string
 }
 
-export default function LoginForm({ id, apiRoute, challenge }: Props) {
+export default function LoginForm(p: Props) {
   use(botDetection)
 
   const [pending, startTransition] = useTransition()
@@ -20,9 +22,11 @@ export default function LoginForm({ id, apiRoute, challenge }: Props) {
 
   function postForm(form: FormData) {
     startTransition(async () => {
-      form.set('challenge', challenge)
+      form.set('challenge', p.challenge)
+      form.set('challenge_method', CHALLENGE_METHOD)
+      form.set('redirect', p.redirect)
 
-      const res = await fetch(apiRoute, {
+      const res = await fetch(p.apiRoute, {
         method: 'POST',
         body: form,
       })
@@ -30,7 +34,7 @@ export default function LoginForm({ id, apiRoute, challenge }: Props) {
         throw new Error(`response ${res.status}:${res.statusText}`)
       }
 
-      navigate({ to: '/app/authorize/$id', params: { id } })
+      navigate({ to: '/app/authorize/$id', params: { id: p.id } })
     })
   }
 
@@ -81,8 +85,8 @@ export default function LoginForm({ id, apiRoute, challenge }: Props) {
             <div className="text-center mt-4">
               <Link
                 to="/user/register/$id"
-                params={{ id }}
-                search={{ challenge }}
+                params={{ id: p.id }}
+                search={{ challenge: p.challenge, redirect: p.redirect }}
                 className="link link-primary"
                 disabled={pending}
               >

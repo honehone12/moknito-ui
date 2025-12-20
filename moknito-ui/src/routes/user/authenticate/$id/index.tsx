@@ -11,7 +11,7 @@ export const Route = createFileRoute('/user/authenticate/$id/')({
 
 function RouteComponent() {
   const { id } = Route.useParams()
-  const { challenge } = Route.useSearch()
+  const { challenge, redirect } = Route.useSearch()
 
   return (
     <main className="flex min-h-screen items-center justify-center">
@@ -20,6 +20,7 @@ function RouteComponent() {
           id={id}
           apiRoute={`/api/user/${id}/authenticate`}
           challenge={challenge}
+          redirect={redirect}
         />
       </Suspense>
     </main>

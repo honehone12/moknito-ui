@@ -41,14 +41,16 @@ function RouteComponent() {
     function onClick() {
       startTransition(async () => {
         {
-          const res = await fetch('/api/app/allow', { method: 'POST' })
+          const res = await fetch(`/api/app/${id}/allow`, { method: 'POST' })
 
           if (res.status !== STATUS.OK) {
             throw new Error(`response ${res.status}:${res.statusText}`)
           }
         }
         {
-          const res = await fetch('/api/app/authorize', { method: 'POST' })
+          const res = await fetch(`/api/app/${id}/authorize`, {
+            method: 'POST',
+          })
 
           if (!res.redirected) {
             throw new Error('response was not redirected')

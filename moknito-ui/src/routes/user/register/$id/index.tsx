@@ -13,7 +13,7 @@ export const Route = createFileRoute('/user/register/$id/')({
 
 function RouteComponent() {
   const { id } = Route.useParams()
-  const { challenge } = Route.useSearch()
+  const { challenge, redirect } = Route.useSearch()
 
   function RegistrationForm() {
     use(botDetection)
@@ -34,7 +34,7 @@ function RouteComponent() {
         navigate({
           to: '/user/join/$id',
           params: { id },
-          search: { challenge },
+          search: { challenge, redirect },
         })
       })
     }
@@ -104,7 +104,7 @@ function RouteComponent() {
                 <Link
                   to="/user/authenticate/$id"
                   params={{ id }}
-                  search={{ challenge }}
+                  search={{ challenge, redirect }}
                   className="link link-primary"
                   disabled={pending}
                 >

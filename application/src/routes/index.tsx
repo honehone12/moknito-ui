@@ -1,4 +1,4 @@
-import { APPLICATION_ID } from '@/lib/application'
+import { APPLICATION_ID, REDIRECT_URL } from '@/lib/application'
 import { generateChallenge } from '@/lib/challenge'
 import { createFileRoute } from '@tanstack/react-router'
 
@@ -6,13 +6,15 @@ export const Route = createFileRoute('/')({
   component: App,
 })
 
-const BASE_URL = 'http://localhost:8080/user/authenticate'
-
 function App() {
   async function onClick() {
     const challenge = await generateChallenge()
+    const q = new URLSearchParams()
+    q.set('challenge', challenge.hash)
+    q.set('redirect', REDIRECT_URL)
 
-    location.href = `${BASE_URL}/${APPLICATION_ID}?challenge=${challenge.hash}`
+    const url = `http://localhost:8080/user/authenticate/${APPLICATION_ID}?${q.toString()}`
+    location.href = url
   }
 
   return (

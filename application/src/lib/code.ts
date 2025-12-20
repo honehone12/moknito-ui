@@ -1,6 +1,6 @@
 import * as v from 'valibot'
 
-export const CODE_ENC_LEN = 24
+export const CODE_ENC_LEN = 22
 const CODE_REGEX = /^[A-Za-z0-9_-]+$/
 
 export const CODE_SCHEMA = v.object({

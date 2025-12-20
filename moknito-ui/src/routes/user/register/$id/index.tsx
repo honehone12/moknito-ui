@@ -23,7 +23,7 @@ function RouteComponent() {
 
     function postForm(form: FormData) {
       startTransition(async () => {
-        const res = await fetch('/api/user/register', {
+        const res = await fetch(`/api/user/${id}/register`, {
           method: 'POST',
           body: form,
         })

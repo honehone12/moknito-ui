@@ -17,7 +17,11 @@ function RouteComponent() {
   return (
     <main className="flex min-h-screen items-center justify-center">
       <Suspense fallback={<Loading />}>
-        <LoginForm id={id} apiRoute="/api/user/join" challenge={challenge} />
+        <LoginForm
+          id={id}
+          apiRoute={`/api/user/${id}/join`}
+          challenge={challenge}
+        />
       </Suspense>
     </main>
   )

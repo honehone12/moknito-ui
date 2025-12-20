@@ -18,7 +18,7 @@ function RouteComponent() {
       <Suspense fallback={<Loading />}>
         <LoginForm
           id={id}
-          apiRoute="/api/user/authenticate"
+          apiRoute={`/api/user/${id}/authenticate`}
           challenge={challenge}
         />
       </Suspense>

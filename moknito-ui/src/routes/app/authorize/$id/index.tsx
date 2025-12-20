@@ -21,8 +21,7 @@ function RouteComponent() {
   async function init(): Promise<AppInfo> {
     await botDetection
 
-    const apiRoute = `/info/app?id=${id}`
-    const res = await fetch(apiRoute)
+    const res = await fetch(`/info/${id}`)
     if (res.status !== STATUS.OK) {
       throw new Error(`status ${res.status}:${res.statusText}`)
     }
@@ -41,23 +40,15 @@ function RouteComponent() {
 
     function onClick() {
       startTransition(async () => {
-        const form = new FormData()
-        form.set('id', id)
         {
-          const res = await fetch('/api/app/allow', {
-            method: 'POST',
-            body: form,
-          })
+          const res = await fetch('/api/app/allow', { method: 'POST' })
 
           if (res.status !== STATUS.OK) {
             throw new Error(`response ${res.status}:${res.statusText}`)
           }
         }
         {
-          const res = await fetch('/api/app/authorize', {
-            method: 'POST',
-            body: form,
-          })
+          const res = await fetch('/api/app/authorize', { method: 'POST' })
 
           if (!res.redirected) {
             throw new Error('response was not redirected')

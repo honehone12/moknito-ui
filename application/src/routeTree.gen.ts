@@ -10,12 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RefreshIndexRouteImport } from './routes/refresh/index'
 import { Route as RedirectIndexRouteImport } from './routes/redirect/index'
-import { Route as ContentsIndexRouteImport } from './routes/contents/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefreshIndexRoute = RefreshIndexRouteImport.update({
+  id: '/refresh/',
+  path: '/refresh/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RedirectIndexRoute = RedirectIndexRouteImport.update({
@@ -23,40 +28,35 @@ const RedirectIndexRoute = RedirectIndexRouteImport.update({
   path: '/redirect/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ContentsIndexRoute = ContentsIndexRouteImport.update({
-  id: '/contents/',
-  path: '/contents/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/contents': typeof ContentsIndexRoute
   '/redirect': typeof RedirectIndexRoute
+  '/refresh': typeof RefreshIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/contents': typeof ContentsIndexRoute
   '/redirect': typeof RedirectIndexRoute
+  '/refresh': typeof RefreshIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/contents/': typeof ContentsIndexRoute
   '/redirect/': typeof RedirectIndexRoute
+  '/refresh/': typeof RefreshIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contents' | '/redirect'
+  fullPaths: '/' | '/redirect' | '/refresh'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contents' | '/redirect'
-  id: '__root__' | '/' | '/contents/' | '/redirect/'
+  to: '/' | '/redirect' | '/refresh'
+  id: '__root__' | '/' | '/redirect/' | '/refresh/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ContentsIndexRoute: typeof ContentsIndexRoute
   RedirectIndexRoute: typeof RedirectIndexRoute
+  RefreshIndexRoute: typeof RefreshIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,6 +68,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/refresh/': {
+      id: '/refresh/'
+      path: '/refresh'
+      fullPath: '/refresh'
+      preLoaderRoute: typeof RefreshIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/redirect/': {
       id: '/redirect/'
       path: '/redirect'
@@ -75,20 +82,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RedirectIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/contents/': {
-      id: '/contents/'
-      path: '/contents'
-      fullPath: '/contents'
-      preLoaderRoute: typeof ContentsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ContentsIndexRoute: ContentsIndexRoute,
   RedirectIndexRoute: RedirectIndexRoute,
+  RefreshIndexRoute: RefreshIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
